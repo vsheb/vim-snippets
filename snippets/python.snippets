@@ -521,3 +521,46 @@ snippet fprs
 	print("$0", file=${1:sys.stderr})
 snippet fprf
 	print(f"$0", file=${1:sys.stderr})
+#### my snippets
+
+snippet cocolibs "Cocotb libraries"
+	import cocotb
+	from cocotb.clock import Clock
+	from cocotb.triggers import FallingEdge
+	from cocotb.triggers import RisingEdge, Timer, First, Event
+	from cocotb.decorators import coroutine
+	import pytest
+	${0}
+
+snippet cocotest
+	@cocotb.test()
+	async def ${1:test}(dut):
+		""" test """
+
+		clock = Clock(dut.clk, 10, units="ns")  # Create a 10us period clock on port clk
+		cocotb.start_soon(clock.start())        # Start the clock
+		${0}
+
+snippet cocoro "cocotb coroutine"		
+	@coroutine
+	async def ${1:coroutine}(${2:dut}):
+		${0}
+
+snippet cocori 
+	await RisingEdge(${1:dut.clk})
+	${0}
+
+snippet cocorun
+	def run_${1:test}():
+		source_dir   = "./src"
+		source_files = []
+		vhdl_sources = [os.path.join(source_dir, f) for f in source_files]
+
+		run(
+			vhdl_sources  = [os.path.join(dir,"x.vhd")],
+			toplevel      = "module",
+			module        = "test_module",
+			toplevel_lang = "vhdl",
+			waves         = 1,
+			force_compile = True )
+
